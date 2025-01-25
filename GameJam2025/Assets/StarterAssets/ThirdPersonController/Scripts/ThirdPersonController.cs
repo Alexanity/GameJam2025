@@ -1,4 +1,4 @@
-﻿ using UnityEngine;
+﻿using UnityEngine;
 #if ENABLE_INPUT_SYSTEM 
 using UnityEngine.InputSystem;
 #endif
@@ -12,8 +12,9 @@ namespace StarterAssets
 #if ENABLE_INPUT_SYSTEM 
     [RequireComponent(typeof(PlayerInput))]
 #endif
-    public class ThirdPersonController : MonoBehaviour
+    public class ThirdPersonController : PortalTraveller
     {
+
         [Header("Player")]
         [Tooltip("Move speed of the character in m/s")]
         public float MoveSpeed = 2.0f;
@@ -122,7 +123,15 @@ namespace StarterAssets
             }
         }
 
-
+        public override void Teleport(Transform fromPortal, Transform toPortal, Vector3 pos, Quaternion rot)
+        {
+            transform.position = pos;
+            Vector3 eulerRot = rot.eulerAngles;
+            float delta = Mathf.DeltaAngle(_targetRotation, eulerRot.y);
+            _targetRotation += delta;
+            transform.eulerAngles = Vector3.up * _targetRotation;
+            Physics.SyncTransforms();
+        }
         private void Awake()
         {
             // get a reference to our main camera
@@ -135,7 +144,7 @@ namespace StarterAssets
         private void Start()
         {
             _cinemachineTargetYaw = CinemachineCameraTarget.transform.rotation.eulerAngles.y;
-            
+
             _hasAnimator = TryGetComponent(out _animator);
             _controller = GetComponent<CharacterController>();
             _input = GetComponent<StarterAssetsInputs>();
