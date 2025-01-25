@@ -16,6 +16,7 @@ public class ItemTracker : MonoBehaviour
             if (targetItem != null)
             {
                 targetItem.SetActive(!makeTargetDisappear); // Toggle target visibility
+                FindObjectOfType<AudioManager>().Play("Gate");
             }
 
             // Optional: Disable this script to stop repeated checks

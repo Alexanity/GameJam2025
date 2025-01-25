@@ -54,6 +54,7 @@ public class InteractZoneController : MonoBehaviour
             if (interactableObject != null)
             {
                 interactableObject.SetActive(false);
+                FindObjectOfType<AudioManager>().Play("Key");
 
                 // Optionally, hide the canvas after interacting
                 if (interactionCanvas != null)
