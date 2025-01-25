@@ -845,7 +845,7 @@ PrefabInstance:
     - target: {fileID: 3653823609973597769, guid: 2a6f1e2d17701ce4aaebd5323dfd278e,
         type: 3}
       propertyPath: SceneName
-      value: Puzzle3
+      value: Puzzle2
       objectReference: {fileID: 0}
     - target: {fileID: 3653823609973597769, guid: 2a6f1e2d17701ce4aaebd5323dfd278e,
         type: 3}
