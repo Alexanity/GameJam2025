@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/StarMenu.unity
+    guid: c6bd14246f988cd48824eb2799e271be
+  - enabled: 1
     path: Assets/Scenes/Puzzle1.unity
     guid: e9017d5f96b9f09489b4b37e1d6eb914
   - enabled: 1
