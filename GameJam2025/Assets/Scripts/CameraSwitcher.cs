@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -5,6 +6,8 @@ public class CameraSwitcher : MonoBehaviour
 {
     [SerializeField] private List<GameObject> cameras; // List of cameras in the desired order
     private int currentCameraIndex = 0; // Start with the first camera
+
+    [SerializeField] private GameObject thirdPersonCamera;// Third person camera
 
     void Start()
     {
@@ -35,6 +38,12 @@ public class CameraSwitcher : MonoBehaviour
             ActivateCamera(currentCameraIndex);
             Debug.Log($"Switched to Camera: {currentCameraIndex + 1}");
         }
+
+        //Placeholder function for camera switch to 3rd person
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            SwichToThirdPersonCamera();
+        }
     }
 
     private void ActivateCamera(int index)
@@ -44,5 +53,16 @@ public class CameraSwitcher : MonoBehaviour
         {
             cameras[i].SetActive(i == index);
         }
+    }
+
+    private void SwichToThirdPersonCamera()
+    {
+        // Activate the selected camera and deactivate all others
+        for (int i = 0; i < cameras.Count; i++)
+        {
+            cameras[i].SetActive(false);
+        }
+
+        thirdPersonCamera.SetActive(true);
     }
 }
