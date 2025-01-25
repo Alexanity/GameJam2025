@@ -55,11 +55,11 @@ public class BubbleInteractionZone : MonoBehaviour
         // Check for interaction while the player is in the zone
         if (isPlayerInZone && Input.GetKeyDown(KeyCode.F)) // 'F' for interaction
         {
+            FindObjectOfType<AudioManager>().Play("Bubbles"); // Play audio from AudioManager
             // Make the object disappear
             if (interactableObject != null)
             {
                 interactableObject.SetActive(false);
-                FindObjectOfType<AudioManager>().Play("Bubbles"); // Play audio from AudioManager
                 bubbleParticles.SetActive(true);
 
                 // Optionally, hide the canvas after interacting
