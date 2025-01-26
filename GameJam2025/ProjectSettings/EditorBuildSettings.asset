@@ -24,6 +24,6 @@ EditorBuildSettings:
     path: Assets/Scenes/Cutscene3.unity
     guid: 87164401524514040bfcb5bff935f8b9
   - enabled: 1
-    path: Assets/Scenes/Puzzle3.unity
+    path: Assets/Scenes/Puzzle3-Old.unity
     guid: fa6fbc61a0ef6bc4989a20d8aba52ef7
   m_configObjects: {}

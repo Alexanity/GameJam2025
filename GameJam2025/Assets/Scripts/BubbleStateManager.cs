@@ -38,7 +38,7 @@ public class BubbleStateManager : MonoBehaviour
         {
             bubble.SetState(false);
         }
-        FindObjectOfType<AudioManager>().Play(""); // ADD AUDIO
+        FindObjectOfType<AudioManager>().Play(""); // ADD YOU STUPID AUDIO
         Debug.Log("Puzzle reset.");
     }
 
@@ -71,6 +71,7 @@ public class BubbleStateManager : MonoBehaviour
             {
                 cubeCollider.enabled = false;
             }
+            FindObjectOfType<AudioManager>().Play(""); // POP BUBBLE
 
             Debug.Log("Cube has disappeared!");
         }

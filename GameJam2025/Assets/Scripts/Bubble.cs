@@ -2,10 +2,13 @@ using UnityEngine;
 
 public class Bubble : MonoBehaviour
 {
+    [SerializeField] private Canvas interactionCanvas; // Canvas to display when the player enters
     [SerializeField] private int bubbleId;
     [SerializeField] private Renderer renderer;
     [SerializeField] private float speed = 5f;
     [SerializeField] private Collider bubbleCollider;
+    private bool isPlayerInZone = false; // Tracks if the player is in the trigger zone
+
 
     private BubbleStateManager stateManager;
 
@@ -22,6 +25,10 @@ public class Bubble : MonoBehaviour
 
     private void Start()
     {
+        if (interactionCanvas != null)
+        {
+            interactionCanvas.enabled = false;
+        }
         startingPosition = transform.position;
 
         if (cube != null)
@@ -54,6 +61,16 @@ public class Bubble : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            isPlayerInZone = true;
+
+            // Show the canvas
+            if (interactionCanvas != null)
+            {
+                interactionCanvas.enabled = true;
+            }
+        }
+        if (other.CompareTag("Player"))
+        {
             canInteract = true;
             Debug.Log($"Player entered bubble {bubbleId}'s interaction zone.");
         }
@@ -61,6 +78,16 @@ public class Bubble : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
+        if (other.CompareTag("Player"))
+        {
+            isPlayerInZone = false;
+
+            // Hide the canvas
+            if (interactionCanvas != null)
+            {
+                interactionCanvas.enabled = false;
+            }
+        }
         if (other.CompareTag("Player"))
         {
             canInteract = false;
