@@ -26,6 +26,7 @@ public class CameraSwitcher : MonoBehaviour
             currentCameraIndex = (currentCameraIndex + 1) % cameras.Count; // Increment and loop back to 0
             ActivateCamera(currentCameraIndex);
             Debug.Log($"Switched to Camera: {currentCameraIndex + 1}");
+            FindObjectOfType<AudioManager>().Play("Camera");
         }
 
         // Move to the previous camera (left) when pressing Q
@@ -34,6 +35,7 @@ public class CameraSwitcher : MonoBehaviour
             currentCameraIndex = (currentCameraIndex - 1 + cameras.Count) % cameras.Count; // Decrement and loop back to the last
             ActivateCamera(currentCameraIndex);
             Debug.Log($"Switched to Camera: {currentCameraIndex + 1}");
+            FindObjectOfType<AudioManager>().Play("Camera");
         }
     }
 

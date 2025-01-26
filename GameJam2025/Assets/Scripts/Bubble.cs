@@ -147,7 +147,7 @@ public class Bubble : MonoBehaviour
 
     private void MoveTowardsTarget()
     {
-        FindObjectOfType<AudioManager>().Play(""); // Bubble interact success
+        FindObjectOfType<AudioManager>().Play("BubblePickUp"); // Bubble interact success
         transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
 
         if (transform.position == targetPosition)

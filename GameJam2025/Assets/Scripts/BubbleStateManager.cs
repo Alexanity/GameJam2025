@@ -12,6 +12,8 @@ public class BubbleStateManager : MonoBehaviour
 
     [Tooltip("The object to enable when the puzzle is successfully solved.")]
     [SerializeField] private GameObject objectToEnable;
+    [SerializeField] private GameObject FinalSceneTransition;
+    [SerializeField] private GameObject secondObjectToEnable;
 
     public void CheckOrder(int bubbleId)
     {
@@ -40,7 +42,7 @@ public class BubbleStateManager : MonoBehaviour
         {
             bubble.SetState(false);
         }
-        FindObjectOfType<AudioManager>().Play(""); // ADD YOUR AUDIO CLIP NAME
+        FindObjectOfType<AudioManager>().Play("BubbleFail"); // ADD YOUR AUDIO CLIP NAME
         Debug.Log("Puzzle reset.");
     }
 
@@ -55,7 +57,8 @@ public class BubbleStateManager : MonoBehaviour
     private void TriggerSuccessEvent()
     {
         HideCube();
-        //EnableObject();
+        EnableObject();
+        EnableSecondObject();
     }
 
     private void HideCube()
@@ -83,7 +86,31 @@ public class BubbleStateManager : MonoBehaviour
         if (objectToEnable != null)
         {
             objectToEnable.SetActive(true);
+            FindObjectOfType<AudioManager>().Play("PortalOpen");
+            FindObjectOfType<AudioManager>().Play("PortalAmbiance");
             Debug.Log($"{objectToEnable.name} has been enabled!");
+        }
+        else
+        {
+            Debug.LogWarning("Object to enable is not assigned in the editor.");
+        }
+    }
+    private void EnableSecondObject()
+    {
+        if (secondObjectToEnable != null)
+        {
+            secondObjectToEnable.SetActive(true);
+            Debug.Log($"{secondObjectToEnable.name} has been enabled!");
+        }
+        else
+        {
+            Debug.LogWarning("Object to enable is not assigned in the editor.");
+        }
+
+        if (FinalSceneTransition != null)
+        {
+            FinalSceneTransition.SetActive(true);
+            Debug.Log($"{FinalSceneTransition.name} has been enabled!");
         }
         else
         {

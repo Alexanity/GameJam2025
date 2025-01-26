@@ -41501,59 +41501,6 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
---- !u!1 &1697152096
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1697152098}
-  - component: {fileID: 1697152097}
-  m_Layer: 0
-  m_Name: AudioManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1697152097
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1697152096}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ba3394b93a078049bbe5cc48fbe9d38, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sounds:
-  - name: Bubbles
-    clip: {fileID: 8300000, guid: 117ce7fee6dacf44d865875978899f93, type: 3}
-    volume: 1
-    pitch: 1
-    spatialblend: 1
-    playOnAwake: 1
-    source: {fileID: 0}
-    loop: 0
---- !u!4 &1697152098
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1697152096}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 9.739027, y: 9.54058, z: -3.2235851}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1756820097
 GameObject:
   m_ObjectHideFlags: 0
@@ -100978,7 +100925,6 @@ SceneRoots:
   - {fileID: 2059447648}
   - {fileID: 5151609316152684743}
   - {fileID: 200085737}
-  - {fileID: 1697152098}
   - {fileID: 1916207148144006817}
   - {fileID: 1982876788}
   - {fileID: 1756820101}
