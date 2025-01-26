@@ -4,6 +4,7 @@ using UnityEngine;
 public class CameraSwitcher : MonoBehaviour
 {
     [SerializeField] private List<GameObject> cameras; // List of cameras in the desired order
+    [SerializeField] private Canvas canvasToDisable;  // Reference to the Canvas object to disable
     private int currentCameraIndex = 0; // Start with the first camera
 
     void Start()
@@ -27,6 +28,10 @@ public class CameraSwitcher : MonoBehaviour
             ActivateCamera(currentCameraIndex);
             Debug.Log($"Switched to Camera: {currentCameraIndex + 1}");
             FindObjectOfType<AudioManager>().Play("Camera");
+            if (canvasToDisable != null)
+            {
+                canvasToDisable.gameObject.SetActive(false);
+            }
         }
 
         // Move to the previous camera (left) when pressing Q
@@ -36,6 +41,10 @@ public class CameraSwitcher : MonoBehaviour
             ActivateCamera(currentCameraIndex);
             Debug.Log($"Switched to Camera: {currentCameraIndex + 1}");
             FindObjectOfType<AudioManager>().Play("Camera");
+            if (canvasToDisable != null)
+            {
+                canvasToDisable.gameObject.SetActive(false);
+            }
         }
     }
 
