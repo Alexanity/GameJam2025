@@ -10,6 +10,9 @@ public class BubbleStateManager : MonoBehaviour
 
     [SerializeField] private GameObject cube;
 
+    [Tooltip("The object to enable when the puzzle is successfully solved.")]
+    [SerializeField] private GameObject objectToEnable;
+
     public void CheckOrder(int bubbleId)
     {
         if (bubbleId == triggerOrder[currentTrigger])
@@ -18,7 +21,6 @@ public class BubbleStateManager : MonoBehaviour
             currentTrigger++;
             UpdateBubbleState(bubbleId, true);
 
-            
             if (currentTrigger == triggerOrder.Length)
             {
                 TriggerSuccessEvent();
@@ -38,7 +40,7 @@ public class BubbleStateManager : MonoBehaviour
         {
             bubble.SetState(false);
         }
-        FindObjectOfType<AudioManager>().Play(""); // ADD YOU STUPID AUDIO
+        FindObjectOfType<AudioManager>().Play(""); // ADD YOUR AUDIO CLIP NAME
         Debug.Log("Puzzle reset.");
     }
 
@@ -53,6 +55,7 @@ public class BubbleStateManager : MonoBehaviour
     private void TriggerSuccessEvent()
     {
         HideCube();
+        //EnableObject();
     }
 
     private void HideCube()
@@ -71,9 +74,20 @@ public class BubbleStateManager : MonoBehaviour
             {
                 cubeCollider.enabled = false;
             }
-            FindObjectOfType<AudioManager>().Play(""); // POP BUBBLE
-
             Debug.Log("Cube has disappeared!");
+        }
+    }
+
+    private void EnableObject()
+    {
+        if (objectToEnable != null)
+        {
+            objectToEnable.SetActive(true);
+            Debug.Log($"{objectToEnable.name} has been enabled!");
+        }
+        else
+        {
+            Debug.LogWarning("Object to enable is not assigned in the editor.");
         }
     }
 }
