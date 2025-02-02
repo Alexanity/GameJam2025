@@ -16,7 +16,8 @@ public class Guestbook : MonoBehaviour
     [SerializeField]
     private GameObject guestbookEntryContainer;
 
-    private string saveDirectory = Path.Combine(Application.dataPath, "Outputs/guestbook.json");
+    private string saveDirectory;
+    private string guestbookPath;
 
     [Serializable]
     public class GuestbookEntry
@@ -32,7 +33,20 @@ public class Guestbook : MonoBehaviour
 
     private void Start()
     {
+        saveDirectory = Path.Combine(Application.dataPath, "Outputs");
+        guestbookPath = Path.Combine(saveDirectory, "guestbook.json");
+        createDirectory();
         ShowGuests();
+    }
+
+    private void createDirectory()
+    {
+        if (File.Exists(guestbookPath))
+        {
+            return;
+        }
+
+        Directory.CreateDirectory(saveDirectory);
     }
 
     public void SaveEntry()
@@ -56,7 +70,7 @@ public class Guestbook : MonoBehaviour
         string json = JsonHelper.ToJson(currentGuests, true);
 
         //write in file
-        File.WriteAllText(saveDirectory, json);
+        File.WriteAllText(guestbookPath, json);
         ShowGuests();
     }
 
@@ -100,13 +114,13 @@ public class Guestbook : MonoBehaviour
     private GuestbookEntry[] GetGuests()
     {
         // Check if the file exists
-        if (!File.Exists(saveDirectory))
+        if (!File.Exists(guestbookPath))
         {
             return new GuestbookEntry[0];
         }
 
         // Read the JSON from the file
-        string json = File.ReadAllText(saveDirectory);
+        string json = File.ReadAllText(guestbookPath);
 
         // Deserialize the JSON to a list of objects
         GuestbookEntry[] guestList = JsonHelper.FromJson<GuestbookEntry>(json);
