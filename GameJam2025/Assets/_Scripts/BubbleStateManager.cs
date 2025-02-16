@@ -42,7 +42,7 @@ public class BubbleStateManager : MonoBehaviour
         {
             bubble.SetState(false);
         }
-        FindObjectOfType<AudioManager>().Play("BubbleFail"); // ADD YOUR AUDIO CLIP NAME
+        FindObjectOfType<AudioManager>().Play("BubbleFail");
         Debug.Log("Puzzle reset.");
     }
 
