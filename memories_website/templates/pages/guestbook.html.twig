@@ -1,0 +1,46 @@
+{% extends "layout.html.twig" %}
+
+{% block content %}
+    <div class="box"><div style="width: 40px; height: 40px;"><span class="dot"></span></div></div>
+    <div class="box"><div><span class="dot"></span></div></div>
+    <div class="box"><div><span class="dot"></span></div></div>
+    <div class="box"><div><span class="dot"></span></div></div>
+    <div class="box"><div style="width: 40px; height: 40px;"><span class="dot"></span></div></div>
+    <div class="box"><div><span class="dot"></span></div></div>
+    <div class="box"><div><span class="dot"></span></div></div>
+    <div class="box"><div style="width: 40px; height: 40px;"><span class="dot"></span></div></div>
+    <div class="box"><div><span class="dot"></span></div></div>
+    <div class="box"><div><span class="dot"></span></div></div>
+    <div class="box" ><div style="width: 40px; height: 40px;"><span class="dot"></span></div></div>
+
+    <div class="guestbook-entries text-center">
+        <h1 class="text-white display-1">Guestbook</h1>
+
+        <div class="text-white">
+            {% if pagerfantaObject|length > 0 %}
+                <div class="row mb-3">
+                    <p class="col-4 fs-2 fw-bolder">Entry №</p>
+                    <p class="col-4 fs-2 fw-bolder">Name</p>
+                    <p class="col-4 fs-2 fw-bolder">Entered At</p>
+                </div>
+                {% for guestbookEntry in pagerfantaObject %}
+                    <div class="row mb-4">
+                        <p class="col-4 fs-3 mb-0">{{ guestbookEntry.id }}</p>
+                        <p class="col-4 fs-3 mb-0">{{ guestbookEntry.name }}</p>
+                        <p class="col-4 fs-3 mb-0">{{ guestbookEntry.createdAt|date('d.m.Y') }}</p>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="fs-2 fw-bolder">There are no guests yet.</div>
+            {% endif %}
+        </div>
+
+        {% if pagerfantaObject|length > 0 %}
+            {% if maxItemsPerPage < pagerfantaObject|length %}
+                <div class="d-flex justify-content-center">
+                    {{ pagerfanta(pagerfantaObject) }}
+                </div>
+            {% endif %}
+        {% endif %}
+    </div>
+{% endblock %}

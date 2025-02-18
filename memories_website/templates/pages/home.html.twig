@@ -1,0 +1,16 @@
+{% extends "layout.html.twig" %}
+
+{% block content %}
+    <section id="hero">
+        <video autoplay muted loop plays-inline class="position-absolute d-flex w-100 h-100">
+            <source src="{{ asset('files/videos/Shipwreck_final.mp4') }}" type="video/mp4">
+        </video>
+
+        <div class="content position-absolute d-flex align-items-center w-100 h-100">
+            <div class="container text-center text-white">
+                <h1 class="text-white display-1">Welcome to Memories website</h1>
+                <p class="lead">Made for Game Jam Gabrovo 2025 afterparty</p>
+            </div>
+        </div>
+    </section>
+{% endblock %}
