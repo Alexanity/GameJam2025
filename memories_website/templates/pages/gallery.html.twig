@@ -1,0 +1,22 @@
+{% extends "layout.html.twig" %}
+
+{% block content %}
+    {% include 'components/background_bubbles.html.twig' %}
+
+    <div class="gradient-container text-center">
+        <h1 class="text-white display-1">Gallery</h1>
+
+        <div class="row mx-3" data-masonry='{"percentPosition": true }'>
+            {% for image in images %}
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-2">
+                    <div class="card bg-transparent border-0">
+                        <img src="{{ asset(image.path) }}" class="card-img-top rounded img-fluid">
+                        <div class="card-body mt-0 pt-0 pb-1">
+                            <p class="card-text  text-white">{{ image.caption }}</p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

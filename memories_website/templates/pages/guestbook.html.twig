@@ -1,19 +1,9 @@
 {% extends "layout.html.twig" %}
 
 {% block content %}
-    <div class="box"><div style="width: 40px; height: 40px;"><span class="dot"></span></div></div>
-    <div class="box"><div><span class="dot"></span></div></div>
-    <div class="box"><div><span class="dot"></span></div></div>
-    <div class="box"><div><span class="dot"></span></div></div>
-    <div class="box"><div style="width: 40px; height: 40px;"><span class="dot"></span></div></div>
-    <div class="box"><div><span class="dot"></span></div></div>
-    <div class="box"><div><span class="dot"></span></div></div>
-    <div class="box"><div style="width: 40px; height: 40px;"><span class="dot"></span></div></div>
-    <div class="box"><div><span class="dot"></span></div></div>
-    <div class="box"><div><span class="dot"></span></div></div>
-    <div class="box" ><div style="width: 40px; height: 40px;"><span class="dot"></span></div></div>
+    {% include 'components/background_bubbles.html.twig' %}
 
-    <div class="guestbook-entries text-center">
+    <div class="gradient-container text-center">
         <h1 class="text-white display-1">Guestbook</h1>
 
         <div class="text-white">
@@ -24,7 +14,7 @@
                     <p class="col-4 fs-2 fw-bolder">Entered At</p>
                 </div>
                 {% for guestbookEntry in pagerfantaObject %}
-                    <div class="row mb-4">
+                    <div class="row mb-3">
                         <p class="col-4 fs-3 mb-0">{{ guestbookEntry.id }}</p>
                         <p class="col-4 fs-3 mb-0">{{ guestbookEntry.name }}</p>
                         <p class="col-4 fs-3 mb-0">{{ guestbookEntry.createdAt|date('d.m.Y') }}</p>

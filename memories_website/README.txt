@@ -6,6 +6,7 @@ HOW TO SETUP
 5) install Heidi https://www.heidisql.com/download.php
 
 in Heidi *MySQL server must be running from now on*
+*might need to change ports if 127.0.0.1:3306 is taken*
 6) new -> with session name 'localhost' -> set user 'root' -> save
 
 in project folder (in terminal)
@@ -14,3 +15,8 @@ in project folder (in terminal)
 9) php bin/console doctrine:database:create
 10) php bin/console doctrine:migrations:migrate
 11) symfony server:start
+
+how to add images:
+go into src/Controller/PageController.php
+find function gallery()
+add new ImageDTO object to array $images

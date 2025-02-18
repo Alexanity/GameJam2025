@@ -34,7 +34,7 @@ body {
     background: rgba(from var(---color-black) r g b / 0.8);
 }
 
-.guestbook-entries {
+.gradient-container {
     background: linear-gradient(to top, var(---color-blue) 70%, var(---color-black));
     color: var(---color-beige);
     overflow: hidden;

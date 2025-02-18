@@ -7,10 +7,12 @@
         {% block stylesheets %}
         {% endblock %}
 
-        {% block javascripts %}
+        {% block javascripts %}            
             {% block importmap %}
                 {{ importmap('app') }}
             {% endblock %}
+
+            <script src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha384-GNFwBvfVxBkLMJpYMOABq3c+d3KnQxudP/mGPkzpZSTYykLBNsZEnG2D9G/X/+7D" crossorigin="anonymous" async></script>
         {% endblock %}
     </head>
     <body class="d-flex flex-column">

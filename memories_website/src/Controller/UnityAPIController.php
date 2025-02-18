@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\DTO\GuestEntryDTO;
+use App\DTO\ImageDTO;
 use App\Entity\GuestEntry;
 use App\Repository\GuestEntryRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
