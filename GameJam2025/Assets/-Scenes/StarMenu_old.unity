@@ -160,6 +160,7 @@ MonoBehaviour:
     playOnAwake: 0
     source: {fileID: 0}
     loop: 0
+    rolloffMode: 0
 --- !u!4 &50534887
 Transform:
   m_ObjectHideFlags: 0
@@ -437,7 +438,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!82 &1624237693
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1645,8 +1646,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 84.898094, y: -15.278931}
-  m_SizeDelta: {x: 169.79619, y: 30.557861}
+  m_AnchoredPosition: {x: 84.898094, y: -25.413078}
+  m_SizeDelta: {x: 169.79619, y: 50.826157}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3212465164519970529
 CanvasRenderer:
@@ -1689,10 +1690,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 678dc2744d5a14744b92ccd770c29cff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mainMenu: {fileID: 2882540051706530842}
   nameInput: {fileID: 1797244981822874819}
   entryPrefab: {fileID: 5228070520771876101, guid: ae3f83f03745e9e4094075e39ffc709e,
     type: 3}
   guestbookEntryContainer: {fileID: 8923993499210650602}
+  url: http://127.0.0.1:8000
+  addEntryPath: /unity/api/add-entry
+  listEntriesPath: /unity/api/list-entries
 --- !u!1 &3546835487241458580
 GameObject:
   m_ObjectHideFlags: 0
@@ -1805,18 +1810,6 @@ MonoBehaviour:
       - m_Target: {fileID: 3541871721562981563}
         m_TargetAssemblyTypeName: Guestbook, Assembly-CSharp
         m_MethodName: SaveEntry
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 2882540051706530842}
-        m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
-        m_MethodName: Play
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2282,8 +2275,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 254.69427, y: -15.278931}
-  m_SizeDelta: {x: 169.79619, y: 30.557861}
+  m_AnchoredPosition: {x: 254.69427, y: -25.413078}
+  m_SizeDelta: {x: 169.79619, y: 50.826157}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &5944626250947737949
 RectTransform:
@@ -3827,7 +3820,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -20.999023, y: 0.000030517578}
+  m_AnchoredPosition: {x: -20.999023, y: 0}
   m_SizeDelta: {x: -248.71, y: -19.33}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &9048524613400461422

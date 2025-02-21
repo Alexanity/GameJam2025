@@ -1,12 +1,15 @@
 using System;
+using System.Collections;
 using System.IO;
-using System.Linq;
 using TMPro;
 using UnityEngine;
-using static Guestbook;
+using UnityEngine.Networking;
 
 public class Guestbook : MonoBehaviour
 {
+    [SerializeField]
+    private MainMenu mainMenu;
+
     [SerializeField]
     private TMP_InputField nameInput;
 
@@ -16,14 +19,25 @@ public class Guestbook : MonoBehaviour
     [SerializeField]
     private GameObject guestbookEntryContainer;
 
-    private string saveDirectory;
+    [SerializeField]
+    private string url = "http://127.0.0.1:8000";
+
+    [SerializeField]
+    private string addEntryPath = "/unity/api/add-entry";
+
+    [SerializeField]
+    private string listEntriesPath = "/unity/api/list-entries";
+
     private string guestbookPath;
+    private GuestbookEntry[] guestList;
+    private bool isDataLoaded = false;
 
     [Serializable]
     public class GuestbookEntry
     {
         public int id;
         public string name;
+
         public GuestbookEntry(string name, int id)
         {
             this.id = id;
@@ -33,108 +47,156 @@ public class Guestbook : MonoBehaviour
 
     private void Start()
     {
-        saveDirectory = Path.Combine(Application.dataPath, "Outputs");
-        guestbookPath = Path.Combine(saveDirectory, "guestbook.json");
-        createDirectory();
+        guestbookPath = Path.Combine(Application.dataPath, "Outputs", "guestbook.json");
+        CreateDirectoryIfNeeded();
         ShowGuests();
+        StartFetchingData();
     }
 
-    private void createDirectory()
+    private void CreateDirectoryIfNeeded()
     {
-        if (File.Exists(guestbookPath))
+        string directory = Path.GetDirectoryName(guestbookPath);
+        if (!Directory.Exists(directory))
         {
-            return;
+            Directory.CreateDirectory(directory);
         }
-
-        Directory.CreateDirectory(saveDirectory);
     }
 
     public void SaveEntry()
     {
-        //get existing guests (if any)
-        GuestbookEntry[] currentGuests = GetGuests();
-
-        //add guest in existing guests
         string name = nameInput.text;
-        if (String.IsNullOrEmpty(name))
-        {
-            return;
-        }
+        if (string.IsNullOrEmpty(name)) return;
 
-        int id = GetGuests().Length + 1;
+        var currentGuests = GetGuests();
+        int id = currentGuests.Length + 1;
 
-        GuestbookEntry guestbookEntry = new GuestbookEntry(name, id);
-        currentGuests = currentGuests.Append(guestbookEntry).ToArray();
+        var newEntry = new GuestbookEntry(name, id);
+        var updatedGuests = AppendToArray(currentGuests, newEntry);
 
-        //json string conversion
-        string json = JsonHelper.ToJson(currentGuests, true);
-
-        //write in file
-        File.WriteAllText(guestbookPath, json);
+        SaveGuestsToFile(updatedGuests);
         ShowGuests();
+
+        if (Application.internetReachability != NetworkReachability.NotReachable)
+        {
+            StartCoroutine(SendDataToWebsite(newEntry));
+        }
+        else
+        {
+            mainMenu.Play();
+        }
+    }
+
+    private GuestbookEntry[] AppendToArray(GuestbookEntry[] array, GuestbookEntry newEntry)
+    {
+        var list = new System.Collections.Generic.List<GuestbookEntry>(array) { newEntry };
+        return list.ToArray();
+    }
+
+    private void SaveGuestsToFile(GuestbookEntry[] guests)
+    {
+        string json = JsonHelper.ToJson(guests, true);
+        File.WriteAllText(guestbookPath, json);
     }
 
     public void ShowGuests()
     {
-        // Clear existing entries in the container
         foreach (Transform child in guestbookEntryContainer.transform)
         {
             Destroy(child.gameObject);
         }
 
-        // Get all guests
-        GuestbookEntry[] guests = GetGuests();
-
-        foreach (GuestbookEntry entry in guests)
+        foreach (var entry in GetGuests())
         {
             CreateGuestUI(entry);
         }
     }
-    private void CreateGuestUI(GuestbookEntry guestEntry)
+
+    public void StartFetchingData()
     {
-        // Instantiate the prefab
-        GameObject newEntry = Instantiate(entryPrefab, guestbookEntryContainer.transform);
-
-        // Find TMP_Text components
-        TMP_Text[] textComponents = newEntry.GetComponentsInChildren<TMP_Text>();
-
-        foreach (TMP_Text textComponent in textComponents)
+        StartCoroutine(GetDataFromWebsite(() =>
         {
-            if (textComponent.name == "Id")
-            {
-                textComponent.text = guestEntry.id.ToString();
-            }
-            else if (textComponent.name == "Name")
-            {
-                textComponent.text = guestEntry.name;
-            }
+            // After data is fetched, show guests
+            ShowGuests();
+        }));
+    }
+
+    private void CreateGuestUI(GuestbookEntry entry)
+    {
+        var newEntry = Instantiate(entryPrefab, guestbookEntryContainer.transform);
+        var textComponents = newEntry.GetComponentsInChildren<TMP_Text>();
+
+        foreach (var textComponent in textComponents)
+        {
+            if (textComponent.name == "Id") textComponent.text = entry.id.ToString();
+            else if (textComponent.name == "Name") textComponent.text = entry.name;
         }
     }
 
     private GuestbookEntry[] GetGuests()
     {
-        // Check if the file exists
-        if (!File.Exists(guestbookPath))
+        if (isDataLoaded)
         {
-            return new GuestbookEntry[0];
+            return guestList;
         }
 
-        // Read the JSON from the file
-        string json = File.ReadAllText(guestbookPath);
-
-        // Deserialize the JSON to a list of objects
-        GuestbookEntry[] guestList = JsonHelper.FromJson<GuestbookEntry>(json);
-
-        GuestbookEntry[] result;
-        if (guestList != null)
+        if (File.Exists(guestbookPath))
         {
-            result = guestList;
+            string json = File.ReadAllText(guestbookPath);
+            guestList = JsonHelper.FromJson<GuestbookEntry>(json);
         }
         else
         {
-            result = new GuestbookEntry[0];
+            guestList = new GuestbookEntry[0];
         }
 
-        return result;
+        return guestList;
+    }
+
+    IEnumerator SendDataToWebsite(GuestbookEntry entry)
+    {
+        string jsonData = JsonUtility.ToJson(entry);
+        byte[] jsonBytes = System.Text.Encoding.UTF8.GetBytes(jsonData);
+        var request = new UnityWebRequest(url + addEntryPath, "POST")
+        {
+            uploadHandler = new UploadHandlerRaw(jsonBytes),
+            downloadHandler = new DownloadHandlerBuffer()
+        };
+        request.SetRequestHeader("Content-Type", "application/json");
+
+        yield return request.SendWebRequest();
+
+        if (request.result == UnityWebRequest.Result.Success)
+        {
+            Debug.Log("Success: " + request.downloadHandler.text);
+        }
+        else
+        {
+            Debug.LogError("Error: " + request.error);
+        }
+
+        mainMenu.Play();
+    }
+
+    IEnumerator GetDataFromWebsite(Action onComplete)
+    {
+        using (var request = UnityWebRequest.Get(url + listEntriesPath))
+        {
+            request.SetRequestHeader("Content-Type", "application/json");
+            yield return request.SendWebRequest();
+
+            if (request.result == UnityWebRequest.Result.Success)
+            {
+                string json = request.downloadHandler.text.Replace("\\u0022", "\"");
+                json = json.Substring(1, json.Length - 2);
+                guestList = JsonHelper.FromJson<GuestbookEntry>(json);
+                isDataLoaded = true;
+                onComplete?.Invoke(); // Notify that data is loaded
+            }
+            else
+            {
+                Debug.LogError("Error: " + request.error);
+                isDataLoaded = false;
+            }
+        }
     }
 }

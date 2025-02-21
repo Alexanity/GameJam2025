@@ -56,7 +56,7 @@ MonoBehaviour:
     rolloffMode: 0
   - name: Key
     clip: {fileID: 8300000, guid: 39da40527ecf994408c0df338372a796, type: 3}
-    volume: 0.8
+    volume: 1
     pitch: 1
     spatialblend: 1
     playOnAwake: 1
@@ -65,18 +65,18 @@ MonoBehaviour:
     rolloffMode: 0
   - name: Gate
     clip: {fileID: 8300000, guid: c754e432a0e37b34b9dd8cbd57c98778, type: 3}
-    volume: 1
+    volume: 0.2
     pitch: 1
-    spatialblend: 1
+    spatialblend: 0
     playOnAwake: 1
     source: {fileID: 0}
     loop: 0
     rolloffMode: 0
   - name: Camera
     clip: {fileID: 8300000, guid: b0e26985d4bfee240affdea18ac4e8d4, type: 3}
-    volume: 1
+    volume: 0.2
     pitch: 1
-    spatialblend: 1
+    spatialblend: 0
     playOnAwake: 1
     source: {fileID: 0}
     loop: 0
